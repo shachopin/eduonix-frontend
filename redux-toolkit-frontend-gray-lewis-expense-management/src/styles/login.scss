@@ -1,0 +1,40 @@
+body {
+  background-color: #F4F1DE;
+  font-family: 'Space Grotesk';
+}
+
+.login-title {
+  margin: auto;
+  margin-top: 3em;
+
+  font: bold 36px 'Space Grotesk';
+  text-align: center;
+
+  color: #003459;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  margin: auto;
+  margin-top: 3em;
+  input {
+    border: 3px solid #003459;
+    margin-top: .5em;
+    padding: .5em;
+  }
+
+  input:focus {
+    border: 3px solid #DA4167;
+    outline: none;
+  }
+
+  button {
+    margin-top: 1em;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 80%;
+  }
+}
