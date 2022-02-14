@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "id": "9010637524",
+      "username": "vasudev",
+      "email": "vasudev@eduonix.com",
+      "age": 30,
+      "gender": "Male",
+      "role": "User",
+      "password": "racecar"
+    },
+    {
+      "id": "9010637525",
+      "username": "vasudev",
+      "email": "vasu@eduonix.com",
+      "age": 30,
+      "gender": "Male",
+      "role": "admin",
+      "password": "racecar"
+    }
+  ],
+  "bookings":[
+    {
+      "id":"1",
+      "user_id":"9010637524",
+      "name":"vasudev",
+      "status":"booked",
+      "email":"vasudev@eduonix.com",
+      "bookingtime":"2021-07-28T15:44:05.397Z",
+      "appointmenttime":"2021-07-29T15:44:05.397Z",
+      "mobile":"9010637524",
+      "hospital":"CARE HOSPITAL",
+      "vaccine":"covaxin"
+    }
+  ]
+}
