@@ -1,4 +1,5 @@
-export const registerNewUserAPI = async (payload) => {
+//good pattern to have a seperate APIs collection file for frontend
+export const registerNewUserAPI = async (payload) => { //instead of using Promise wrapper outside of async(option 1), here using option 2, using Promise.resolve and. Promise.reject to do the same thing
     try {
         const response = await fetch("http://localhost:3001/users/signup", {
             method: "POST",
@@ -16,11 +17,11 @@ export const registerNewUserAPI = async (payload) => {
                 data
             })
         }
-        return Promise.reject({
+        return Promise.reject({ //here all DB related issues (either db query issue or db query no issue but user already existed)
             success: false,
             message
         })
-    } catch (error) {
+    } catch (error) { //network issue
         console.error(error, "error occured in registerNewUserAPI");
         return Promise.reject({
             success: false,
@@ -44,16 +45,16 @@ export const validateUserLogin = async ({ email, password }) => {
         });
         const { success, data } = await response.json();
         if (success) {
-            return {
+            return { //same as Promise.resolve, because inside async function
                 success: true,
                 data
             };
         }
-        return {
+        return { //ALL DB RELATED ISSUES   //same as Promise.resolve, because inside async function
             success: false,
             data: null
         }
-    } catch (error) {
+    } catch (error) { //network issue
         console.error(error);
         return Promise.reject({
             success: false,
@@ -66,18 +67,19 @@ export const fetchBookingsByUserId = async (user_id) => {
     try {
         const response = await fetch(`http://localhost:3001/users/my-appointments/${user_id}`);
         const { success, data } = await response.json();
-        if (success) {
+        if (success) { //no matter find or not find, both here
             return {
                 success: true,
                 data
             };
         }
-        return {
+        return { //db issue
             success: false,
             data: null
         }
-    } catch (error) {
+    } catch (error) { //network issue
         console.error(error);
+        //you missed return Promise.reject statement here
     }
 }
 

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import fetch from 'isomorphic-fetch'
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'http://localhost:5000'; //normally better to create a API collection layer, but it's fine for simplicity
 
 const initialState = {
   jwt: undefined,
@@ -25,8 +25,8 @@ export const loginAsync = createAsyncThunk(
     })
     // The value we return becomes the `fulfilled` action payload
     const parsedResponse = await response.json()
-    localStorage.setItem('token', parsedResponse)
-    return parsedResponse
+    localStorage.setItem('token', parsedResponse) //generally side effect things, e.g like localStorage interaction, put in thunk, in in reducer, reducer is just pure function state machine
+    return parsedResponse // The value we return becomes the `fulfilled` action payload, same as Promise.response
   }
 );
 
