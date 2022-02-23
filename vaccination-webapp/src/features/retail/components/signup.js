@@ -51,7 +51,7 @@ export function UserFormActions(props) {
         color="primary"
         className={classes.submit}
         onClick={(e) => {
-          e.preventDefault();
+          e.preventDefault(); //may not be necessary
           handleSubmit();
         }}
       >

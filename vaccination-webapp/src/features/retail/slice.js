@@ -20,15 +20,15 @@ const initialState = {
 }
 export const registerNewUserThunk = createAsyncThunk(
     'retail/signup',
-    async (payload, { rejectWithValue }) => {
+    async (payload, { rejectWithValue }) => { //instead of using Promise wrapper outside of async, here using option 2, using Promise.resolve and. Promise.reject to do the same thing
         try {
             const response = await registerNewUserAPI(payload);
-            if (response.success) {
-                return Promise.resolve(response.data);
+            if (response.success) { //this check can be omitted, await promse resolved, which guarantess response.success is true
+                return Promise.resolve(response.data); //will go to thunk.fullfilled section
             }
-            return rejectWithValue(response.message);
-        } catch (error) {
-            return rejectWithValue(error.message)
+            return rejectWithValue(response.message); //actually this line can be omitted, won't enter at all
+        } catch (error) {  //ALL issues, either nextwork issur or DB related issues (be it DB query issue or DB query no isse but user already existed)
+            return rejectWithValue(error.message)  //will go to thrunk.rejected section
         }
     }
 );
@@ -38,11 +38,11 @@ export const userLoginThunk = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const response = await validateUserLogin(payload);
-            if (response.success) {
+            if (response.success) { //这里倒是需要， 因为DB related issue 依然Project.resolve done by return value
                 return Promise.resolve(response.data);
             }
-            return rejectWithValue("Invalid Creds!!")
-        } catch (error) {
+            return rejectWithValue("Invalid Creds!!") //这里倒是需要
+        } catch (error) { //network issue
             return rejectWithValue(error.message)
         }
     }
@@ -54,10 +54,10 @@ export const fetchBookingsOfUserByIdThunk = createAsyncThunk(
         try {
             const response = await fetchBookingsByUserId(user_id);
             if (response.success) {
-                return Promise.resolve(response.data);
+                return Promise.resolve(response.data); //response.data can be null here
             }
-            return rejectWithValue("Fetching bookings failed")
-        } catch (error) {
+            return rejectWithValue("Fetching bookings failed") //db issue
+        } catch (error) { //network issue
             return rejectWithValue(error.message);
         }
 
@@ -125,8 +125,8 @@ const retailSlice = createSlice({
                 }
             })
             .addCase(registerNewUserThunk.fulfilled, (state, action) => {
-                state.info = action.payload;
-                state.activity.loggedIn = true;
+                state.info = action.payload; //use this as a global state wide indicator for logged in - similar to token based jwt auth
+                state.activity.loggedIn = true; //use this as a global state wide indicator for logged in - similar to token based jwt auth
                 state.snack = {
                     ...state.snack,
                     open: true,
@@ -135,10 +135,10 @@ const retailSlice = createSlice({
                 }
             })
             .addCase(userLoginThunk.fulfilled, (state, action) => {
-                state.activity = {
+                state.activity = { //use this as a global state wide indicator for logged in - similar to token based jwt auth
                     loggedIn: true
                 }
-                state.info = action.payload;
+                state.info = action.payload; //use this as a global state wide indicator for logged in - similar to token based jwt auth
                 state.snack = {
                     ...state.snack,
                     open: true,

@@ -48,7 +48,7 @@ export default function App() {
     if (!localStorage.getItem('token')) {
       history.push('/')
     } else {
-      const fetchData = async () => {
+      const fetchData = async () => { //not sure why async is used, there is no await in the function body
       
         dispatch(fetchExpenses())
           .unwrap()
