@@ -45,7 +45,7 @@ export const registerAsync = createAsyncThunk(
         birthday
       })
     })
-    // The value we return becomes the `fulfilled` action payload
+    //The value we return becomes the `fulfilled` action payload
     const parsedResponse = await response.json()
     return parsedResponse
   }
